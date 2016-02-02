@@ -20,8 +20,12 @@
 									$this->firstname = $firstname;
 									$this->lastname = $lastname;
 									$this->age = $age;
-
 								} //__construct
+
+								//Write a greeting
+								public function greet() {
+									echo "Hello, my name is {$this->firstname} {$this->lastname}. Nice to meet you! :-)";
+								}
 
             } //Person
 
@@ -33,7 +37,10 @@
 						//Check living status of teacher
 						//echo $teacher->isAlive; //should return 1
 						//Check age of student
-						echo $student->age;
+						//echo $student->age;
+						//Echo greeting
+						$teacher->greet();
+
 
         ?>
       </p>
