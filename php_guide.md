@@ -336,3 +336,55 @@ Equal: `==`
 Identical: `===`
 
 The difference between equal and identical is that there are some things that are considered equal because they're roughly equal. For example, the number `123` is considered equal to the string `"123"`, because if we convert the types, then they are considered equal but they are not considered identical. Identical, they have to be of the same type as well. So, it just goes a little bit further in the check to make sure that they are absolutely 100% the same.
+
+__Array Pointers__
+PHP maintains a pointer that points to one of the items in an array. That item is referred to as the current item. By default, that's always the first item in the array. When we start looping through arrays using something like Foreach, PHP moves the pointer down the array as it assigns each value to the loop's variable. Moving the pointer to the next value is how PHP keeps track of which item you're working with now and what the next item is that it should give you after that.
+
+But loops are not the only way to move pointers around. You can use various functions to locate the pointer and manually move it around. This will be helpful when working with databases later, as functions we use to iterate through php arrays like `foreach()` will not be able to be used when working with a database.
+```php
+<?php
+  $myArray = array(1,2,3,4,5);
+  //check the current position of the pointer
+  echo current($myArray); //output: 1
+
+  //next: move the pointer forward
+  //similar to using 'continue' inside a loop
+  next($myArray);
+  echo current($myArray) //output: 2
+
+  //Move the pointer forward two more times
+  next($myArray);
+  next($myArray);
+  echo current($myArray); //output: 4
+
+  //prev: move the pointer backward
+  prev($myArray);
+  echo current($myArray); //output: 3
+
+  //reset: move the pointer to the first element
+  reset($myArray);
+  echo current($myArray); //output: 1
+
+  //end: move the pointer to the last element
+  end($myArray);
+  echo current($myArray); //output: 5
+
+  //Move the pointer past the last element
+  next($myArray);
+  echo current($myArray); //output: (null)
+
+ ?>
+ ```
+
+ How to use a while loop to move the pointer through the array similar to foreach
+ ```php
+ <?php
+  while($value = current($myArray)) {
+    echo $value . ", ";
+    next($myArray);
+  }
+  ?>
+  ```
+Notice that in the condition of our while loop we're doing an assignment, not a comparison. That is a single equal sign, not a double equals. We're assigning a value from current to ``$value`, and we're also testing then to see if that assignment was successful. If it returned a value, then the expression is going to evaluate to true. But if it returned null, in other words we got to the end of it, then this expression will evaluate to a Boolean false.
+
+Null will be considered false. And so at that point it will exit. So what we're essentially saying is, get the item that the array pointer points to, assign it to `$value`, and if that is an item, if you successfully got one, then execute the loop. If you did not successfully get an item, well then exit the loop. Then we iterate with `next($myArray)`. 
