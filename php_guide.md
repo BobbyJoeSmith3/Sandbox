@@ -310,4 +310,29 @@ So that's what null is, null is just the lack of having a value. That's a pretty
 __Type Juggling and Casting__
 We've seen a few times when PHP converted a value from one type to another type for us. For example we were able to add a string to an integer and we saw that PHP converted a Boolean true to be the string one when it was output to our webpage. This process is referred to as `Type Juggling` when PHP does it on the fly for us.
 
-We can also explicitly set a type ourselves. For example, converting a string one into the integer one. And when we do it, it's called `Type Casting`. We can type cast in two ways. We can do it using a function `settype($var, "integer")` with two arguments - the item that's being typecast into another, and the type we want to set it to. The other way we can set type is by sinply writing the name of the desired type in parentheses before the item being cast `(integer) $var`
+We can also explicitly set a type ourselves. For example, converting a string one into the integer one. And when we do it, it's called `Type Casting`. We can type cast in two ways. We can do it using a function `settype($var, "integer")` with two arguments - the item that's being typecast into another, and the type we want to set it to. The other way we can set type is by simply writing the name of the desired type in parentheses before the item being cast `(integer) $var`.
+
+`settype($var)` recasts the variable in place, making a permanent change. `(datatype) $var` only makes the change as it is assigned, which is an impermanent change.
+
+`gettype($var)` returns the datatype of the variable.
+
+__Constants__
+A constant is the opposite of a variable, as they do not change or vary. Constants are going to be recognizable on PHP because they're always written in all capital letters and there's no dollar sign in front of them. In addition, the only way to set a constant is to use a function -- the define function -- whereas with variables you can just use an `=` sign.
+
+```php
+<?php
+//variable
+$max_width = 980;
+
+//constant
+define("MAX_WIDTH", 980);
+echo MAX_WIDTH;
+?>
+```
+Only need to you quotation marks when defining the constant, not to use after. You cannot change or redfine the value of the constant variable. It remains defined for the duration of the PHP script, so once the script is executed it can be redefined when the script is called again.
+
+__Comparison Operators__
+Equal: `==`
+Identical: `===`
+
+The difference between equal and identical is that there are some things that are considered equal because they're roughly equal. For example, the number `123` is considered equal to the string `"123"`, because if we convert the types, then they are considered equal but they are not considered identical. Identical, they have to be of the same type as well. So, it just goes a little bit further in the check to make sure that they are absolutely 100% the same.
