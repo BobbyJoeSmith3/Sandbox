@@ -387,4 +387,54 @@ But loops are not the only way to move pointers around. You can use various func
   ```
 Notice that in the condition of our while loop we're doing an assignment, not a comparison. That is a single equal sign, not a double equals. We're assigning a value from current to ``$value`, and we're also testing then to see if that assignment was successful. If it returned a value, then the expression is going to evaluate to true. But if it returned null, in other words we got to the end of it, then this expression will evaluate to a Boolean false.
 
-Null will be considered false. And so at that point it will exit. So what we're essentially saying is, get the item that the array pointer points to, assign it to `$value`, and if that is an item, if you successfully got one, then execute the loop. If you did not successfully get an item, well then exit the loop. Then we iterate with `next($myArray)`. 
+Null will be considered false. And so at that point it will exit. So what we're essentially saying is, get the item that the array pointer points to, assign it to `$value`, and if that is an item, if you successfully got one, then execute the loop. If you did not successfully get an item, well then exit the loop. Then we iterate with `next($myArray)`.
+
+__User Defined Functions__
+A function is code that performs a specific task, which is then packaged up into a single unit that can then be called upon whenever that task is needed.
+
+Functions follow this basic format:
+```php
+function name($arg1, $arg2) {
+  statement;
+}
+
+//call function to execute
+name($arg1, $arg2);
+```
+Function names are very much like the variable names that we assign -- they can have letters, numbers, underscores, and dashes, but cannot have any spaces, and they must start with either a letter or an underscore. Unlike variable names though, function names are case insensitive.
+
+Declaring a function and calling a function do not have to happen sequentially in versions of PHP after version 3, however it is good practice to do so because it's more readable. The page is pre-processed to find all of the functions first.
+
+Once we've defined a function we can't redefine it.
+
+We must always call functions with the same number of arguments and in the same order as specified in the function definition, unless default values are specified. Null is an acceptable replacement for an argument.
+
+When you return a value in a function, it exits the function immediately, similar to how a `break` works. `return` says "let's exit the function and return this value. This is the thing that needs to be passed out of the function. No more processing required.". Even if we put `return` inside loops or switch statements that are in the function, it will immediately exit from all of those as well.
+
+Functions can only return a single value. But what if we need to return multiple values? Since fucntions can only return one entity, we can use an array which stores multiple values as a single entity.
+
+Ex.
+```php
+<?php
+function add_subt($val1, $val2) {
+  $add = $val1 + $val2;
+  $subt = $val1 - $val2;
+  return array($add, $subt);
+}
+
+$result_array = add_subt(10,5);
+//add
+echo $result_array[0]; //output: 15
+//subtract
+echo $result_array[1]; //output: 5
+
+//You can also use list instead of array
+list($add_result, $subt_result) = add_subt(10,5);
+echo $add_result; //output: 15
+echo $subt_result; //output: 5
+?>
+```
+
+Using list is a little less clunky than using array. List is super-handy because it allows us to take all those elements that we just packaged up into an array to get out of the function, and immediately break them back down, unpack it, and assign them two variables that have good, common sense names that are easier to identify than result_array[1].
+
+To use a global variable outside of a function into the function, you have to use the keyword `global`. The keyword `global` allows you to bring in a globally scoped variable for use inside a local scope.
