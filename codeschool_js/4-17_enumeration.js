@@ -8,11 +8,11 @@ var rockSpearguns = {
 };
 
 // build listGuns
-var listGuns = function(guns) {
-  for (var speargun in guns) {
-    console.log(speargun);
+rockSpearguns["listGuns"] = function() {
+  for (var property in this) {
+    console.log("Behold! " + property + ", with heft " + this[property]["heft"] + "!");
   }
 };
 
 // call listGuns and pass in rockSpearguns
-listGuns(rockSpearguns);
+rockSpearguns["listguns"]();
