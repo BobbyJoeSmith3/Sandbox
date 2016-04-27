@@ -79,3 +79,33 @@ post8.sendRopeTo(post10);
 post9.sendRopeTo(post10);
 post10.sendRopeTo(post8);
 post10.sendRopeTo(post9);
+
+/* CHALLENGE 5.9 - Rebuild genericPost prototype into a constructor function */
+/* Original Post:
+var genericPost = {
+  x: 0,
+  y: 0,
+  postNum: undefined,
+  connectionsTo: undefined,
+  sendRopeTo: function(connectedPost) {
+    if (this.connectionsTo == undefined) {
+      var postArray = [];
+      postArray.push(connectedPost);
+      this.connectionsTo = postArray;
+    } else {
+      this.connectionsTo.push(connectedPost);
+    }
+  }
+};
+*/
+
+//Create Fencepost function with parameters x, y, postNum
+function Fencepost (x, y, postNum) {
+  this.x = x;
+  this.y = y;
+  this.postNum = postNum;
+  this.connectionsTo = [];
+  this.sendRopeTo = function (connectedPost) {
+    connectedPost.push(connectionsTo);
+  };
+}
