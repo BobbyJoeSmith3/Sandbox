@@ -109,3 +109,17 @@ function Fencepost (x, y, postNum) {
     connectedPost.push(connectionsTo);
   };
 }
+
+/* CHALLENGE 5.10 - Construct some objects with new Fencepost constructor */
+//Create new fence posts
+var post18 = new Fencepost(-3, 4, 18);
+var post19 = new Fencepost(5, -1, 19);
+var post20 = new Fencepost(-2, 10, 20);
+
+//Connect fence posts based on the following criteria:
+//  1. If two posts both have even-numbered y coordinates, they should be connected.
+//  2. If two posts both have odd-numbered x coordinates, they should be connected.
+post18.sendRopeTo(post20);
+post20.sendRopeTo(post18);
+post18.sendRopeTo(post19);
+post19.sendRopeTo(post18);
