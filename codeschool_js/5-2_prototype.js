@@ -42,7 +42,7 @@ Array.prototype.countCattle = function (kind) {
 //alert the sum of calfs from canyonCows, bulls from valleyCows, and cows from forestCows
 alert(canyonCows.countCattle("calf") + valleyCows.countCattle("bull") + forestCows.countCattle("cow"));
 
-/* Add two functions to the Object prototype: noCalvesYet and countForBreeding */
+/* CHALLENGE 5.4 - Add two functions to the Object prototype: noCalvesYet and countForBreeding */
 Object.prototype.noCalvesYet = function () {
   /*if the object type is a "cow" and also had no calves, return true */
   if ((this.type == "cow") && (this.hadCalf == null)) {
@@ -66,5 +66,10 @@ Object.prototype.countForBreeding = function () {
   return numToBreed;
 };
 
-//call countForBreeding object prototype on forestCows
-forestCows.countForBreeding();
+/* CHALLENGE 5.5 - Use functions to determine how many cows have not had calves yet */
+
+var numPriorityCows = canyonCows.countForBreeding() +
+                      valleyCows.countForBreeding() + forestCows.countForBreeding() + badlandsCows.countForBreeding();
+
+//Alert message with number of cows of top breeding priority
+alert("Herd-merger has indicated " + numPriorityCows + " cows of top breeding priority.");
