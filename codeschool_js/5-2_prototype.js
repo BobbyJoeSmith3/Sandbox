@@ -57,11 +57,14 @@ Object.prototype.countForBreeding = function () {
 
   //Loop through array
   for (var i = 0; i < this.length; i++) {
-    //If noCalvesYet returns true for current cow in forestCows, increment numToBreed
-    if (forestCows[i].noCalvesYet()) {
+    //If noCalvesYet returns true for current array item, increment numToBreed
+    if (this[i].noCalvesYet()) {
       numToBreed++;
     }
   }
 
   return numToBreed;
 };
+
+//call countForBreeding object prototype on forestCows
+forestCows.countForBreeding();
