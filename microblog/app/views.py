@@ -12,5 +12,17 @@ The two route decorators above the function create the mappings from URLs '/' an
 @app.route('/index')
 def index():
   user = {'nickname': 'Miguel'} #fake user
+  #fake array of posts
+  posts = [
+    {
+      'author': {'nickname': 'John'},
+      'body': 'Beautiful day in Portland!'
+    },
+    {
+      'author': {'nickname': 'Susan'},
+      'body': 'The Avengers movie was so cool!'
+    }
+  ]
   return render_template('index.html',
-                          user=user)
+                          user=user,
+                          posts=posts)
