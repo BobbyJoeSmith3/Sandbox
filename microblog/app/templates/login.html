@@ -1,0 +1,18 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Sign In</h1>
+  <form action="" method="post" name="login"/>
+    <!--form.hidden_tag() template argument will get replaced with a hidden field that implements the CSRF prevention enabled in config -->
+    {{ form.hidden_tag() }}
+    <!--The actual fields of our form are rendered by the field objects, we just need to refer to a {{form.field_name}} template argument in the place where each field should be inserted-->
+    <p>
+      Please enter your OpenID:<br/>
+      <!--takes argument of character width-->
+      {{ form.openid(size=80) }}<br/>
+    </p>
+    <p>{{ form.remember_me }} Remember Me</p>
+    <p><input type="submit" value="Sign In"/></p>
+  </form>
+{% endblock %}
