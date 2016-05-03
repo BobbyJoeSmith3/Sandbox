@@ -41,6 +41,14 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   form = LoginForm()
+  #Returns Fasle if called when form is being presented to user.
+  #Returns True if called as part of a form submission, and if data gathered is approved when run through validators attached to fields.
+  if form.validate_on_submit():
+    #flash function shows a message on the next page presented to the user
+    flash('Login requested for OpenID="%s", remember_me=%s' %
+          (form.openid.data, str(form.remember_me.data)))
+    #redirect to index page
+    return redirect('/index')
   return render_template('login.html',
                           title='Sign In',
                           form=form)
