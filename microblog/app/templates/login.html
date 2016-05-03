@@ -4,10 +4,13 @@
 {% block content %}
 <script type="text/javascript">
 function set_openid(openid, pr) {
+  //finds the position of username in openid and saves it to u
   u = openid.search('<username>')
+  //prompts user to enter username if openid incorporates username
   if (u != -1) {
-    //openid requires username
+    //user input for username stored in user
     user = prompt('Enter your ' + pr + ' username:')
+    //assigns openid to openid + username
     openid = openid.substr(0, u) + user
   }
   form = document.forms['login'];
@@ -28,6 +31,7 @@ function set_openid(openid, pr) {
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br/>
 
+      <!--generates list of available openid providers-->
       |{% for pr in providers %}
         <a href="javascript:set_openid('{{ pr.url }}', '{{ pr.name }}');">{{ pr.name }}</a> |
       {% endfor %}
