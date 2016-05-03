@@ -11,6 +11,10 @@
       Please enter your OpenID:<br/>
       <!--takes argument of character width-->
       {{ form.openid(size=80) }}<br/>
+      <!--call descriptive error message submitted to form object-->
+      {% for error in form.openid.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br/>
     </p>
     <p>{{ form.remember_me }} Remember Me</p>
     <p><input type="submit" value="Sign In"/></p>
