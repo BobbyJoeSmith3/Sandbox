@@ -20,7 +20,7 @@ function set_openid(openid, pr) {
     {{ form.hidden_tag() }}
     <!--The actual fields of our form are rendered by the field objects, we just need to refer to a {{form.field_name}} template argument in the place where each field should be inserted-->
     <p>
-      Please enter your OpenID:<br/>
+      Please enter your OpenID, or select one of the providers below:<br/>
       <!--takes argument of character width-->
       {{ form.openid(size=80) }}<br/>
       <!--call descriptive error message submitted to form object-->
