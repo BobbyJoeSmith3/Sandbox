@@ -45,7 +45,11 @@ class Tile():
 
     # draw tile
     def draw_tile(self, canvas):
-        pass
+        canvas.draw_polygon([(self.tile_position[0], self.tile_position[1]),
+                            (self.tile_position[0], self.tile_position[1] - TILE_HEIGHT),
+                            (self.tile_position[0] + TILE_WIDTH, self.tile_position[1] - TILE_HEIGHT),
+                            (self.tile_position[0] + TILE_WIDTH, self.tile_position[1])],
+                            1, '#78a5a3', '#444c5c' )
 
 # draw handler
 def draw(canvas):
@@ -60,6 +64,9 @@ frame.set_draw_handler(draw)
 # create tiles
 tile1 = Tile(3, True, [0, TILE_HEIGHT])
 tile2 = Tile(5, False, [TILE_WIDTH, TILE_HEIGHT])
+
+# kick things off
+frame.start()
 
 ###################################################
 # Testing code
