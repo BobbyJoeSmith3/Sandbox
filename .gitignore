@@ -60,6 +60,7 @@ node_modules
 ##########
 /README.html
 /build/
+/coursera/memory-the-game
 
 # PhpStrom Project Files #
 .idea/

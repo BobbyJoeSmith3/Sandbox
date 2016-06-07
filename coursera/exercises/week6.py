@@ -4,13 +4,21 @@
 #################################################
 # Student adds code where appropriate
 
+# imports
+import simplegui
+
+# globals
+TILE_WIDTH = 50
+TILE_HEIGHT = 100
+
 # definition of empty Tile class (use pass in the body)
 class Tile():
 
     # definition of initializer
-    def __init__(self, num, exp):
+    def __init__(self, num, exp, pos):
         self.number = num
         self.exposed = exp
+        self.tile_position = pos
 
     # a string that returns the state of the objects
     def __str__(self):
@@ -35,22 +43,28 @@ class Tile():
     def hide_tile(self):
         self.exposed = False
 
-# create two objects, my_tile and your_tile
-my_tile = Tile(3, True)
+    # draw tile
+    def draw_tile(self, canvas):
+        pass
+
+# draw handler
+def draw(canvas):
+    tile1.draw_tile(canvas)
+    tile2.draw_tile(canvas)
+
+
+# create frame
+frame = simplegui.create_frame('OOP Memory', 2 * TILE_WIDTH, TILE_HEIGHT)
+frame.set_draw_handler(draw)
+
+# create tiles
+tile1 = Tile(3, True, [0, TILE_HEIGHT])
+tile2 = Tile(5, False, [TILE_WIDTH, TILE_HEIGHT])
 
 ###################################################
 # Testing code
 
-print my_tile
-my_tile.hide_tile()
-print my_tile
-my_tile.expose_tile()
-print my_tile
 
 
 ####################################################
 # Output of testing code
-
-#The value of the tile is 3 and the tile is exposed.
-#The value of the tile is 3 and the tile is NOT exposed.
-#The value of the tile is 3 and the tile is exposed.
