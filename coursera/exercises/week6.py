@@ -61,15 +61,28 @@ class Tile():
                                 (self.tile_position[0] + TILE_WIDTH, self.tile_position[1])],
                                 1, PRIMARY_COLOR, SECONDARY_COLOR )
 
+    # determine if tile has been selected by user mouse click
+    def is_selected(self, position):
+        if (self.tile_position[0] < position[0]) and (position[0] < self.tile_position[0] + TILE_WIDTH):
+            if self.exposed == True:
+                self.exposed = False
+            elif self.exposed == False:
+                self.exposed = True
+
 # draw handler
 def draw(canvas):
     tile1.draw_tile(canvas)
     tile2.draw_tile(canvas)
 
+# mouse click handler
+def mouse_handler(position):
+    tile1.is_selected(position)
+    tile2.is_selected(position)
 
 # create frame
 frame = simplegui.create_frame('OOP Memory', 2 * TILE_WIDTH, TILE_HEIGHT)
 frame.set_draw_handler(draw)
+frame.set_mouseclick_handler(mouse_handler)
 
 # create tiles
 tile1 = Tile(3, True, [0, TILE_HEIGHT])
