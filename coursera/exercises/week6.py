@@ -10,6 +10,8 @@ import simplegui
 # globals
 TILE_WIDTH = 50
 TILE_HEIGHT = 100
+PRIMARY_COLOR = '#444c5c'
+SECONDARY_COLOR = '#78a5a3'
 
 # definition of empty Tile class (use pass in the body)
 class Tile():
@@ -49,7 +51,8 @@ class Tile():
                             (self.tile_position[0], self.tile_position[1] - TILE_HEIGHT),
                             (self.tile_position[0] + TILE_WIDTH, self.tile_position[1] - TILE_HEIGHT),
                             (self.tile_position[0] + TILE_WIDTH, self.tile_position[1])],
-                            1, '#78a5a3', '#444c5c' )
+                            1, SECONDARY_COLOR, PRIMARY_COLOR )
+        canvas.draw_text(str(self.number), self.tile_position, 42, SECONDARY_COLOR )
 
 # draw handler
 def draw(canvas):
