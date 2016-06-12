@@ -47,7 +47,7 @@ class Tile():
 
     # draw tile
     def draw_tile(self, canvas):
-        if self.exposed == True:
+        if self.exposed:
             canvas.draw_polygon([(self.tile_position[0], self.tile_position[1]),
                                 (self.tile_position[0], self.tile_position[1] - TILE_HEIGHT),
                                 (self.tile_position[0] + TILE_WIDTH, self.tile_position[1] - TILE_HEIGHT),
