@@ -47,12 +47,19 @@ class Tile():
 
     # draw tile
     def draw_tile(self, canvas):
-        canvas.draw_polygon([(self.tile_position[0], self.tile_position[1]),
-                            (self.tile_position[0], self.tile_position[1] - TILE_HEIGHT),
-                            (self.tile_position[0] + TILE_WIDTH, self.tile_position[1] - TILE_HEIGHT),
-                            (self.tile_position[0] + TILE_WIDTH, self.tile_position[1])],
-                            1, SECONDARY_COLOR, PRIMARY_COLOR )
-        canvas.draw_text(str(self.number), self.tile_position, 42, SECONDARY_COLOR )
+        if self.exposed == True:
+            canvas.draw_polygon([(self.tile_position[0], self.tile_position[1]),
+                                (self.tile_position[0], self.tile_position[1] - TILE_HEIGHT),
+                                (self.tile_position[0] + TILE_WIDTH, self.tile_position[1] - TILE_HEIGHT),
+                                (self.tile_position[0] + TILE_WIDTH, self.tile_position[1])],
+                                1, SECONDARY_COLOR, PRIMARY_COLOR )
+            canvas.draw_text(str(self.number), self.tile_position, 42, SECONDARY_COLOR )
+        else:
+            canvas.draw_polygon([(self.tile_position[0], self.tile_position[1]),
+                                (self.tile_position[0], self.tile_position[1] - TILE_HEIGHT),
+                                (self.tile_position[0] + TILE_WIDTH, self.tile_position[1] - TILE_HEIGHT),
+                                (self.tile_position[0] + TILE_WIDTH, self.tile_position[1])],
+                                1, PRIMARY_COLOR, SECONDARY_COLOR )
 
 # draw handler
 def draw(canvas):
