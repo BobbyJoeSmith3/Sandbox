@@ -12,4 +12,13 @@ class Person():
 
     def age(self, current_year):
         return current_year - self.birth_year
-        
+
+
+def average_age(people, current_year):
+    combined_age = 0
+    num_people = len(people)
+    i = num_people - 1
+    while i  >= 0:
+        combined_age += people[i].age(current_year)
+        i -= 1
+    return combined_age/num_people
