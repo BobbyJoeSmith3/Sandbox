@@ -17,8 +17,6 @@ class Person():
 def average_age(people, current_year):
     combined_age = 0
     num_people = len(people)
-    i = num_people - 1
-    while i  >= 0:
-        combined_age += people[i].age(current_year)
-        i -= 1
-    return combined_age/num_people
+    for p in people:
+        combined_age += p.age(current_year)
+    return combined_age/float(num_people)
