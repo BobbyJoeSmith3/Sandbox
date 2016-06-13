@@ -40,3 +40,10 @@ def average_age(people, current_year):
     for p in people:
         combined_age += p.age(current_year)
     return combined_age/float(num_people)
+
+# assign a project if student doesn't student has correct name and password and if student hasn't already been assigned the project being assigned
+def assign(student_list, full_name, pwd, project):
+    for student in student_list:
+        if student.get_name() == full_name and student.check_password(pwd):
+            if student.get_projects().count(project) == 0:
+                student.add_project(project)
