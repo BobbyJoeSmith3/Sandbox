@@ -73,6 +73,8 @@ class Tile:
 # draw handler
 def draw(canvas):
     # add code here
+    for tile in my_tiles:
+        tile.draw_tile(canvas) 
 
 
 # create frame and add a button and labels
