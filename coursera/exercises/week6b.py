@@ -1,3 +1,4 @@
+# create a person object
 class Person():
     def __init__(self, first_name, last_name, birth_year):
         self.first_name = first_name
@@ -14,6 +15,25 @@ class Person():
         return current_year - self.birth_year
 
 
+class Student():
+    def __init__(self, person, pwd):
+        self.person = person
+        self.password = str(pwd)
+        self.projects = []
+
+    def get_name(self):
+        return self.person.full_name()
+
+    def check_password(self, pwd):
+        return self.password == pwd
+
+    def get_projects(self):
+        return self.projects
+
+    def add_project(self, project_name):
+        self.projects.append(project_name)
+
+# calculate the average age of a list of people created with Person class
 def average_age(people, current_year):
     combined_age = 0
     num_people = len(people)
