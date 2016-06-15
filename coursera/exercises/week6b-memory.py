@@ -71,12 +71,49 @@ class Tile:
 
 # mouseclick handler
 def mouseclick(pos):
+    # for tile in my_tiles:
+    #     if tile.is_selected(pos):
+    #         if tile.is_exposed() == True:
+    #             tile.hide_tile()
+    #         elif tile.is_exposed() == False:
+    #             tile.expose_tile()
+    global state, turns, choice1, choice2
+
+    # assign clicked_tile to selected tile
     for tile in my_tiles:
         if tile.is_selected(pos):
-            if tile.is_exposed() == True:
-                tile.hide_tile()
-            elif tile.is_exposed() == False:
-                tile.expose_tile()
+            clicked_tile = tile
+
+    # if tile is clicked tile is already exposed do nothing...
+    if clicked_tile.is_exposed():
+        return
+
+    # ...otherwise, expose tile
+    clicked_tile.expose_tile()
+
+    # game logic
+    if state == 0:
+        # change state
+        state = 1
+        # assign clicked tile to choice1
+        choice1 = clicked_tile
+    elif state == 1:
+        # change state
+        state = 2
+        # increment turns
+        turns += 1
+        # draw turns label
+        label.set_text("Turns = "+str(turns))
+        # assign clicked tile to choice2
+        choice2 = clicked_tile
+    elif state == 2:
+        # check if choices match
+        if choice1.get_number() != choice2.get_number():
+            choice1.hide_tile()
+            choice2.hide_tile()
+        state = 1
+        choice1 = clicked_tile
+
 
 # draw handler
 def draw(canvas):
@@ -90,7 +127,7 @@ frame = simplegui.create_frame("Memory", 2 * DISTINCT_TILES * TILE_WIDTH, TILE_H
 frame.add_button("Restart", new_game)
 label = frame.add_label("Turns = 0")
 frame.set_draw_handler(draw)
-frame.set_mouse_handler(mouseclick)
+frame.set_mouseclick_handler(mouseclick)
 
 # get things rolling
 new_game()
