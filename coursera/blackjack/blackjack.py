@@ -16,11 +16,13 @@ card_back = simplegui.load_image("http://storage.googleapis.com/codeskulptor-ass
 in_play = False
 outcome = ""
 score = 0
+first_round = True
 
 # define globals for cards
 SUITS = ('C', 'S', 'H', 'D')
 RANKS = ('A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K')
 VALUES = {'A':1, '2':2, '3':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, 'T':10, 'J':10, 'Q':10, 'K':10}
+
 
 
 # define card class
@@ -48,6 +50,8 @@ class Card:
                     CARD_CENTER[1] + CARD_SIZE[1] * SUITS.index(self.suit))
         canvas.draw_image(card_images, card_loc, CARD_SIZE, [pos[0] + CARD_CENTER[0], pos[1] + CARD_CENTER[1]], CARD_SIZE)
 
+
+
 # define hand class
 class Hand:
     def __init__(self):
@@ -56,9 +60,13 @@ class Hand:
 
     def __str__(self):
         # return a string representation of a hand
-        ans = "Hand contains "
+        ans = ""
         for card in self.cards:
-            ans += str(card) + " "
+            # prevent gap after second card in hand declared
+            if card == self.cards[0]:
+                ans += str(card) + " "
+            else:
+                ans += str(card)
         return ans
 
     def add_card(self, card):
@@ -88,6 +96,7 @@ class Hand:
 
     def draw(self, canvas, pos):
         pass	# draw a hand on the canvas, use the draw method for cards
+
 
 
 # define deck class
@@ -120,46 +129,91 @@ class Deck:
 
 #define event handlers for buttons
 def deal():
-    global outcome, in_play, new_deck, player_hand, dealer_hand
+    global outcome, in_play, my_deck, player_hand, dealer_hand, player_busted, first_round
 
     in_play = True
+    player_busted = False
 
     # shuffle deck
-    new_deck = Deck()
-    new_deck.shuffle()
+    my_deck = Deck()
+    my_deck.shuffle()
 
     # deal player hand and dealer hand
     player_hand = Hand()
     dealer_hand = Hand()
     i = 0
     while i < 2:
-        player_hand.add_card(new_deck.deal_card())
-        dealer_hand.add_card(new_deck.deal_card())
+        player_hand.add_card(my_deck.deal_card())
+        dealer_hand.add_card(my_deck.deal_card())
         i += 1
 
-    print "Player hand contains", player_hand, "with a hand value of", player_hand.get_value()
-    print "Dealer hand contains", dealer_hand, "with a hand value of", dealer_hand.get_value()
+    if first_round:
+        print "Player hand contains", player_hand, "for a hand value of", player_hand.get_value()
+        print "Dealer hand contains", dealer_hand, "for a hand value of", dealer_hand.get_value()
+        first_round = False
+    else:
+        print "\n\nPlayer hand contains", player_hand, "for a hand value of", player_hand.get_value()
+        print "Dealer hand contains", dealer_hand, "for a hand value of", dealer_hand.get_value()
+
+
 
 def hit():
-    global in_play, player_hand, score, outcome, new_deck
+    global in_play, player_hand, score, outcome, my_deck, player_busted
+
     # if the hand is in play, hit the player
     if in_play:
-        player_hand.add_card(new_deck.deal_card())
+        player_hand.add_card(my_deck.deal_card())
         # calculate value and print to screen
-        print "Player's hand value =", player_hand.get_value()
-    # if busted, assign a message to outcome, update in_play and score
-    if player_hand.get_value() > 21:
-        outcome = player_hand.get_value(), "- You busted!"
-        score -= 1
-        print outcome
-        print "Score =", score
+        print "Player hits for a hand value of", player_hand.get_value()
+
+        # if busted, assign a message to outcome, update in_play and score
+        if player_hand.get_value() > 21:
+            outcome = "You busted! Dealer wins. Score ="
+            in_play = False
+            score -= 1
+            player_busted = True
+            print outcome, score
+    else:
+        print "\nThe round is over. Deal again?"
+
+
 
 def stand():
-    pass	# replace with your code below
+    global player_hand, in_play, score, outcome, dealer_hand, my_deck, player_busted
+
+    # check if player already busted
+    if player_busted:
+        print "\nIt's too late, you already busted with a hand value of", str(player_hand.get_value()) + "... \nNo shame in going for it all though! Deal again?"
 
     # if hand is in play, repeatedly hit dealer until his hand has value 17 or more
-
     # assign a message to outcome, update in_play and score
+    if in_play:
+        while dealer_hand.get_value() < 17:
+            dealer_hand.add_card(my_deck.deal_card())
+            print "Dealer hits for a hand value of", dealer_hand.get_value()
+            if dealer_hand.get_value() > 21:
+                outcome = "You win! Dealer busted with a hand value of"
+                score += 1
+                print outcome, str(dealer_hand.get_value()) + ". Score =", score
+        if 17 <= dealer_hand.get_value() <= 21:
+            if player_hand.get_value() < dealer_hand.get_value():
+                outcome = "Dealer wins! Score ="
+                score -= 1
+                print outcome, score
+            elif player_hand.get_value() == dealer_hand.get_value():
+                outcome = "It's a draw! Tie goes to the dealer. Score ="
+                score -= 1
+                print outcome, score
+            else:
+                outcome = "You win! Score ="
+                score += 1
+                print outcome, score
+    else:
+        print "\nThe round is over. Play again?"
+
+    in_play = False
+
+
 
 # draw handler
 def draw(canvas):
@@ -167,6 +221,7 @@ def draw(canvas):
 
     card = Card("S", "A")
     card.draw(canvas, [300, 300])
+
 
 
 # initialization frame
