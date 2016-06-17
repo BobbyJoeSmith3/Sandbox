@@ -62,11 +62,7 @@ class Hand:
         # return a string representation of a hand
         ans = ""
         for card in self.cards:
-            # prevent gap after second card in hand declared
-            if card == self.cards[0]:
-                ans += str(card) + " "
-            else:
-                ans += str(card)
+            ans += str(card) + " "
         return ans
 
     def add_card(self, card):
@@ -81,6 +77,7 @@ class Hand:
         for card in self.cards:
             if VALUES.get(card.get_rank()) == 1:
                 has_ace = True
+
         # compute the value of the hand
         hand_value = 0
         for card in self.cards:
@@ -138,22 +135,25 @@ def deal():
     my_deck = Deck()
     my_deck.shuffle()
 
-    # deal player hand and dealer hand
+    # create hand objects for dealer and player
     player_hand = Hand()
     dealer_hand = Hand()
+
+    # deal cards to player and dealer hands
     i = 0
     while i < 2:
         player_hand.add_card(my_deck.deal_card())
         dealer_hand.add_card(my_deck.deal_card())
         i += 1
 
+    # format print message based on whether it's the first round
     if first_round:
-        print "Player hand contains", player_hand, "for a hand value of", player_hand.get_value()
-        print "Dealer hand contains", dealer_hand, "for a hand value of", dealer_hand.get_value()
+        print "Player hand contains", str(player_hand) + "for a hand value of", player_hand.get_value()
+        print "Dealer hand contains", str(dealer_hand) + "for a hand value of", dealer_hand.get_value()
         first_round = False
     else:
-        print "\n\nPlayer hand contains", player_hand, "for a hand value of", player_hand.get_value()
-        print "Dealer hand contains", dealer_hand, "for a hand value of", dealer_hand.get_value()
+        print "\n\nPlayer hand contains", str(player_hand) + "for a hand value of", player_hand.get_value()
+        print "Dealer hand contains", str(dealer_hand) + "for a hand value of", dealer_hand.get_value()
 
 
 
@@ -162,9 +162,11 @@ def hit():
 
     # if the hand is in play, hit the player
     if in_play:
+        # deal a card to player hand
         player_hand.add_card(my_deck.deal_card())
+
         # calculate value and print to screen
-        print "Player hits for a hand value of", player_hand.get_value()
+        print "Player hits and is dealt a", player_hand.cards[-1], "for a hand value of", player_hand.get_value()
 
         # if busted, assign a message to outcome, update in_play and score
         if player_hand.get_value() > 21:
@@ -190,7 +192,7 @@ def stand():
     if in_play:
         while dealer_hand.get_value() < 17:
             dealer_hand.add_card(my_deck.deal_card())
-            print "Dealer hits for a hand value of", dealer_hand.get_value()
+            print "Dealer hits and is dealt a", dealer_hand.cards[-1], "for a hand value of", dealer_hand.get_value()
             if dealer_hand.get_value() > 21:
                 outcome = "You win! Dealer busted with a hand value of"
                 score += 1
@@ -208,7 +210,7 @@ def stand():
                 outcome = "You win! Score ="
                 score += 1
                 print outcome, score
-    else:
+    elif in_play and not player_busted:
         print "\nThe round is over. Play again?"
 
     in_play = False
