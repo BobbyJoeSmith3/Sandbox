@@ -66,13 +66,14 @@ class Hand:
         return self.cards.append(card)
 
     def get_value(self):
-        # count aces as 1, if the hand has an ace, then add 10 to hand value if it doesn't bust
+        # NOTE: count aces as 1, if the hand has an ace, then add 10 to hand value if it doesn't bust
+
         # check for aces
         has_ace = False
         for card in self.cards:
             if VALUES.get(card.get_rank()) == 1:
                 has_ace = True
-        # compute the value of the hand, see Blackjack video
+        # compute the value of the hand
         hand_value = 0
         for card in self.cards:
             hand_value += VALUES.get(card.get_rank())
@@ -121,6 +122,8 @@ class Deck:
 def deal():
     global outcome, in_play, new_deck, player_hand, dealer_hand
 
+    in_play = True
+
     # shuffle deck
     new_deck = Deck()
     new_deck.shuffle()
@@ -134,17 +137,22 @@ def deal():
         dealer_hand.add_card(new_deck.deal_card())
         i += 1
 
-    in_play = True
-
-    print "Player hand contains", player_hand
-    print "Dealer hand contains", dealer_hand
+    print "Player hand contains", player_hand, "with a hand value of", player_hand.get_value()
+    print "Dealer hand contains", dealer_hand, "with a hand value of", dealer_hand.get_value()
 
 def hit():
-    pass	# replace with your code below
-
+    global in_play, player_hand, score, outcome, new_deck
     # if the hand is in play, hit the player
-
+    if in_play:
+        player_hand.add_card(new_deck.deal_card())
+        # calculate value and print to screen
+        print "Player's hand value =", player_hand.get_value()
     # if busted, assign a message to outcome, update in_play and score
+    if player_hand.get_value() > 21:
+        outcome = player_hand.get_value(), "- You busted!"
+        score -= 1
+        print outcome
+        print "Score =", score
 
 def stand():
     pass	# replace with your code below
