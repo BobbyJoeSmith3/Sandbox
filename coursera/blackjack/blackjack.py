@@ -70,7 +70,7 @@ class Hand:
         # check for aces
         has_ace = False
         for card in self.cards:
-            if card == 'A':
+            if VALUES.get(card.get_rank()) == 1:
                 has_ace = True
         # compute the value of the hand, see Blackjack video
         hand_value = 0
