@@ -222,8 +222,19 @@ def stand():
 # draw handler
 def draw(canvas):
     # use draw method in Hand class to draw player and dealer's hands
-    player_hand.draw(canvas, [100,300])
+    global score
+
+    # dealer hand
+    canvas.draw_text("Dealer:", [100, 75], 18, "White", "monospace")
     dealer_hand.draw(canvas, [100,100])
+
+    # player hand
+    canvas.draw_text("Player:", [100, 275], 18, "White", "monospace")
+    player_hand.draw(canvas, [100,300])
+
+    # score
+    score_board = "Score = " + str(score)
+    canvas.draw_text(score_board, [475, 25], 18, "White", "monospace")
 
 
 
