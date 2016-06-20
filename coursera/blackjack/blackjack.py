@@ -90,9 +90,11 @@ class Hand:
             else:
                 return hand_value
 
-
     def draw(self, canvas, pos):
-        pass	# draw a hand on the canvas, use the draw method for cards
+        # draw a hand on the canvas, use the draw method for cards
+        for c in self.cards:
+            c.draw(canvas, pos)
+            pos[0] += CARD_SIZE[0] + 5
 
 
 
@@ -219,10 +221,9 @@ def stand():
 
 # draw handler
 def draw(canvas):
-    # test to make sure that card.draw works, replace with your code below
-
-    card = Card("S", "A")
-    card.draw(canvas, [300, 300])
+    # use draw method in Hand class to draw player and dealer's hands
+    player_hand.draw(canvas, [100,300])
+    dealer_hand.draw(canvas, [100,100])
 
 
 
