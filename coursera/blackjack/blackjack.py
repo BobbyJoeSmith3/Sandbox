@@ -13,8 +13,11 @@ CARD_BACK_CENTER = (36, 48)
 card_back = simplegui.load_image("http://storage.googleapis.com/codeskulptor-assets/card_jfitz_back.png")
 
 # initialize some useful global variables
+CANVAS_WIDTH = 600
+CANVAS_HEIGHT = 600
 in_play = False
 outcome = ""
+prompt = ""
 score = 0
 first_round = True
 
@@ -128,7 +131,7 @@ class Deck:
 
 #define event handlers for buttons
 def deal():
-    global outcome, in_play, my_deck, player_hand, dealer_hand, player_busted, first_round
+    global outcome, in_play, my_deck, player_hand, dealer_hand, player_busted, first_round, prompt
 
     in_play = True
     player_busted = False
@@ -150,17 +153,19 @@ def deal():
 
     # format print message based on whether it's the first round
     if first_round:
+        prompt = "Hit or stand?"
         print "Player hand contains", str(player_hand) + "for a hand value of", player_hand.get_value()
         print "Dealer hand contains", str(dealer_hand) + "for a hand value of", dealer_hand.get_value()
         first_round = False
     else:
+        prompt = "Hit or stand?"
         print "\n\nPlayer hand contains", str(player_hand) + "for a hand value of", player_hand.get_value()
         print "Dealer hand contains", str(dealer_hand) + "for a hand value of", dealer_hand.get_value()
 
 
 
 def hit():
-    global in_play, player_hand, score, outcome, my_deck, player_busted
+    global in_play, player_hand, score, outcome, my_deck, player_busted, prompt
 
     # if the hand is in play, hit the player
     if in_play:
@@ -168,25 +173,29 @@ def hit():
         player_hand.add_card(my_deck.deal_card())
 
         # calculate value and print to screen
+        prompt = "Hit or stand?"
         print "Player hits and is dealt a", player_hand.cards[-1], "for a hand value of", player_hand.get_value()
 
         # if busted, assign a message to outcome, update in_play and score
         if player_hand.get_value() > 21:
+            prompt = "You busted! Dealer wins. Deal again?"
             outcome = "You busted! Dealer wins. Score ="
             in_play = False
             score -= 1
             player_busted = True
             print outcome, score
     else:
+        prompt = "The round is over. Deal again?"
         print "\nThe round is over. Deal again?"
 
 
 
 def stand():
-    global player_hand, in_play, score, outcome, dealer_hand, my_deck, player_busted
+    global player_hand, in_play, score, outcome, dealer_hand, my_deck, player_busted, prompt
 
     # check if player already busted
     if player_busted:
+        prompt = "Too late to stand now, you already busted. Deal again?"
         print "\nIt's too late, you already busted with a hand value of", str(player_hand.get_value()) + "... \nNo shame in going for it all though! Deal again?"
 
     # if hand is in play, repeatedly hit dealer until his hand has value 17 or more
@@ -196,23 +205,28 @@ def stand():
             dealer_hand.add_card(my_deck.deal_card())
             print "Dealer hits and is dealt a", dealer_hand.cards[-1], "for a hand value of", dealer_hand.get_value()
             if dealer_hand.get_value() > 21:
+                prompt = "Dealer busted! You win. Deal again?"
                 outcome = "You win! Dealer busted with a hand value of"
                 score += 1
                 print outcome, str(dealer_hand.get_value()) + ". Score =", score
         if 17 <= dealer_hand.get_value() <= 21:
             if player_hand.get_value() < dealer_hand.get_value():
+                prompt = "You played well, but the Dealer was better. Deal again?"
                 outcome = "Dealer wins! Score ="
                 score -= 1
                 print outcome, score
             elif player_hand.get_value() == dealer_hand.get_value():
+                prompt = "It's a draw! Tie goes to the dealer. Deal again?"
                 outcome = "It's a draw! Tie goes to the dealer. Score ="
                 score -= 1
                 print outcome, score
             else:
+                prompt = "Well played, you win! Deal again?"
                 outcome = "You win! Score ="
                 score += 1
                 print outcome, score
     elif in_play and not player_busted:
+        prompt = "The round is over. Deal again?"
         print "\nThe round is over. Play again?"
 
     in_play = False
@@ -222,7 +236,6 @@ def stand():
 # draw handler
 def draw(canvas):
     # use draw method in Hand class to draw player and dealer's hands
-    global score
 
     # dealer hand
     canvas.draw_text("Dealer:", [100, 75], 18, "White", "monospace")
@@ -236,10 +249,17 @@ def draw(canvas):
     score_board = "Score = " + str(score)
     canvas.draw_text(score_board, [475, 25], 18, "White", "monospace")
 
+    # gameplay prompts
+    # get the width of the prompt in pixels
+    text_width = frame.get_canvas_textwidth(prompt, 18, "monospace")
+    # center text based on prompt width
+    prompt_pos = [(CANVAS_WIDTH/2) - (text_width/2), 500 ]
+    canvas.draw_text(prompt, prompt_pos, 18, "White", "monospace")
+
 
 
 # initialization frame
-frame = simplegui.create_frame("Blackjack", 600, 600)
+frame = simplegui.create_frame("Blackjack", CANVAS_WIDTH, CANVAS_HEIGHT)
 frame.set_canvas_background("Green")
 
 #create buttons and canvas callback
