@@ -239,7 +239,12 @@ def draw(canvas):
 
     # dealer hand
     canvas.draw_text("Dealer:", [100, 75], 18, "White", "monospace")
-    dealer_hand.draw(canvas, [100,100])
+    if in_play:
+        dealer_hand.draw(canvas, [100,100])
+        card_loc = (CARD_BACK_CENTER[0], CARD_BACK_CENTER[1])
+        canvas.draw_image(card_back, card_loc, CARD_BACK_SIZE, [100 + CARD_BACK_CENTER[0], 100 + CARD_BACK_CENTER[1]], CARD_BACK_SIZE)
+    else:
+        dealer_hand.draw(canvas, [100,100])
 
     # player hand
     canvas.draw_text("Player:", [100, 275], 18, "White", "monospace")
