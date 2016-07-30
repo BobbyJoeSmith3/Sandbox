@@ -9,7 +9,6 @@
         width: 100%;
         height: auto;
       }
-
     </style>
 
     <!--[if lt IE 9]>
@@ -17,7 +16,7 @@
     <![endif]-->
   </head>
   <body>
-    <!-- SVG : Begin -->
+    <!-- SVG : BEGIN -->
     <svg version="1.1" xmnls="http://www.w3.org/2000/svg" viewBox="0 0 500 50">
       <rect x="0" y="0" width="500" height="50" />
       <circle cx="250" cy="25" r="25" fill="teal" />
@@ -25,7 +24,29 @@
       <line x1="0" y1="0" x2="500" y2="50" stroke="yellow" stroke-width="3" />
       <text x="400" y="18" font-family="avenir, sans-serif" font-size="16" fill="magenta">Easy-peasy</text>
     </svg>
-    <!-- SVG : End -->
+    <!-- SVG : END -->
+
+
+
+    <!-- Import D3 Library -->
     <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
+
+
+
+    <!-- D3 Code : BEGIN -->
+    <script type="text/javascript">
+      // Global Variables
+      var viewBox = "0 0 500 100"
+      var xmnls = "http://www.w3.org/2000/svg"
+
+      // Create a reference to an SVG object
+      var svg1 = d3.select("body")
+        .append("svg")
+        .attr("version", 1.1)
+        .attr("xmnls", xmnls)
+        .attr("viewBox", viewBox)
+        .attr("fill", "mediumaquamarine");
+    </script>
+    <!-- D3 Code : END -->
   </body>
 </html>
