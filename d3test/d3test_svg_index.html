@@ -35,12 +35,15 @@
 
     <!-- D3 Code : BEGIN -->
     <script type="text/javascript">
-      // Global Variables
+    // ===================================
+    // GLOBAL VARIABLES
+    // ===================================
       var viewBox = "0 0 500 100";
       var xmnls = "http://www.w3.org/2000/svg";
       var w = 500;
       var h = 100;
       var dataset = [5, 10, 15, 20, 25];
+      var dataset_random = []
       var colors_orange = [
         "lightsalmon",
         "coral",
@@ -50,8 +53,13 @@
         "orange"
       ];
 
+
+
+    // ===================================
+    // CIRCLES SVG
+    // ===================================
       // Create a reference to an SVG object
-      var svg1 = d3.select("body")
+      var svg_circles = d3.select("body")
         .append("svg")
         .attr("version", 1.1)
         .attr("xmnls", xmnls)
@@ -59,7 +67,7 @@
         .attr("fill", "mediumaquamarine");
 
       // Assign circle references for each data point in dataset
-      var circles = svg1.selectAll("circle")
+      var circles = svg_circles.selectAll("circle")
         .data(dataset)
         .enter()
         .append("circle");
@@ -74,6 +82,43 @@
         })
         .attr("fill", function(d, i) {
           return colors_orange[i];
+        });
+
+
+
+    // ===================================
+    // BAR GRAPH
+    // ===================================
+      // Generate 25 random numbers between (0 - 30) and assign to dataset_random
+      for (var i = 0; i < 25; i++) {
+        var newNumber = Math.floor(Math.random() * 31);
+        dataset_random.push(newNumber);
+      }
+
+      var maxBarWidth = w/dataset_random.length;
+      var barPadding = 1;
+
+      // Create a reference to an SVG object
+      var svg_bargraph = d3.select("body")
+        .append("svg")
+        .attr("version", 1.1)
+        .attr("xmnls", xmnls)
+        .attr("viewBox", viewBox);
+
+      // Create bars for graph
+      svg_bargraph.selectAll("rect")
+        .data(dataset_random)
+        .enter()
+        .append("rect")
+        .attr("x", function(d, i) {
+          return (i * maxBarWidth) + barPadding;
+        })
+        .attr("y", function(d) {
+          return h - (d * 3);
+        })
+        .attr("width", (maxBarWidth) - barPadding)
+        .attr("height", function(d) {
+          return d * 3;
         });
     </script>
     <!-- D3 Code : END -->
