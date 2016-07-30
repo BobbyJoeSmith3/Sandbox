@@ -52,6 +52,13 @@
         "darkorange",
         "orange"
       ];
+      colors_green = [
+        "mediumaquamarine",
+        "darkseagreen",
+        "lightseagreen",
+        "darkcyan",
+        "teal"
+      ];
 
 
 
@@ -119,6 +126,10 @@
         .attr("width", (maxBarWidth) - barPadding)
         .attr("height", function(d) {
           return d * 3;
+        })
+        .attr("fill", function(d) {
+          var aColor = Math.floor(Math.random() * 5);
+          return colors_green[aColor];
         });
     </script>
     <!-- D3 Code : END -->
