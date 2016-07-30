@@ -36,8 +36,19 @@
     <!-- D3 Code : BEGIN -->
     <script type="text/javascript">
       // Global Variables
-      var viewBox = "0 0 500 100"
-      var xmnls = "http://www.w3.org/2000/svg"
+      var viewBox = "0 0 500 100";
+      var xmnls = "http://www.w3.org/2000/svg";
+      var w = 500;
+      var h = 100;
+      var dataset = [5, 10, 15, 20, 25];
+      var colors_orange = [
+        "lightsalmon",
+        "coral",
+        "tomato",
+        "orangered",
+        "darkorange",
+        "orange"
+      ];
 
       // Create a reference to an SVG object
       var svg1 = d3.select("body")
@@ -46,6 +57,24 @@
         .attr("xmnls", xmnls)
         .attr("viewBox", viewBox)
         .attr("fill", "mediumaquamarine");
+
+      // Assign circle references for each data point in dataset
+      var circles = svg1.selectAll("circle")
+        .data(dataset)
+        .enter()
+        .append("circle");
+
+      // For every circle in circles, assign a position, size, and color
+      circles.attr("cx", function(d, i) {
+        return (i * 50) + 25;
+        })
+        .attr("cy", h/2)
+        .attr("r", function(d) {
+          return d;
+        })
+        .attr("fill", function(d, i) {
+          return colors_orange[i];
+        });
     </script>
     <!-- D3 Code : END -->
   </body>
