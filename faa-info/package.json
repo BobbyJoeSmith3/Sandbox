@@ -1,0 +1,20 @@
+{
+  "name": "faa-info",
+  "version": "1.0.0",
+  "description": "Alexa development tutorial through the bignerdranch",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Bobby Joe Smith III",
+  "license": "ISC",
+  "dependencies": {
+	"alexa-app": "^2.3.2",
+	"alexa-app-server": "^2.2.4",
+	"chai": "^3.5.0",
+	"chai-as-promised": "^5.2.0",
+	"lodash": "^4.5.0",
+	"mocha": "^2.4.5",
+	"request-promise": "^2.0.1"
+  }
+}
